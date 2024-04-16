@@ -8,11 +8,36 @@
 }
 
 .MenuContent {
-  color: var(--color);
-  background-color: var(--background-color);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-color);
+  color: var(--color);
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 700;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.MenuIcon {
+  font-size: 1.3rem;
+  margin: 0.2em;
+}
+
+.TitleAndLogo {
+  display: flex;
+  align-items: center;
+}
+
+.Logo {
+  max-height: 1.1em;
+  margin-left: 0.5em;
+}
+
+.SideBarButton {
+  border-style: none;
+  background-color: transparent;
+  cursor: pointer;
 }
