@@ -1,10 +1,11 @@
-import './Table.css';
+import "./Table.css";
 
 // interface TableData para descrever a estrutura dos dados da tabela
 export interface TableData {
-  nome: string;
-  descricao: string;
-  preco: number;
+  name: string;
+  published_at: string;
+  company: string;
+  active_principles: { name: string }[]; // Atualizado para refletir a estrutura dos princípios ativos
 }
 
 function Table({ data }: { data: TableData[] }) {
@@ -13,18 +14,22 @@ function Table({ data }: { data: TableData[] }) {
       <table>
         <thead>
           <tr>
-            <th>Nome</th>
-            <th>Data</th>
-            <th>Laboratório</th>
-            <th>Princípio Ativo</th>
+            <th className="Name">Nome</th>
+            <th className="Date">Data</th>
+            <th className="Lab">Laboratório</th>
+            <th className="Principle">Princípio Ativo</th>
           </tr>
         </thead>
         <tbody>
           {data.map((item, index) => (
             <tr key={index}>
-              <td>{item.nome}</td>
-              <td>{item.descricao}</td>
-              <td>{item.preco}</td>
+              <td>{item.name}</td>
+              <td>{item.published_at}</td>
+              <td>{item.company}</td>
+              <td>
+                {/* Renderiza o nome do princípio ativo */}
+                {item.active_principles[0].name}
+              </td>
             </tr>
           ))}
         </tbody>

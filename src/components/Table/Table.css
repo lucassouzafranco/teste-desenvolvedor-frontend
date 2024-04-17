@@ -3,7 +3,7 @@
 }
 
 table {
-  width: 100%;
+  width: 80vw;
   border-collapse: collapse;
 }
 
@@ -11,16 +11,40 @@ th {
   padding: 0.5em;
   text-align: left;
   border-bottom: 1px solid #B6B6B6;
-}
-
-th, td {
+  font-size: 1.1em;
   color: #09242F;
 }
 
-td {
-  padding-left: 0.5em;
+/* Largura das colunas do cabeçalho */
+.Name {
+  width: 22%;
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+.Date {
+  width: 15%;
+}
+
+.Lab {
+  width: 30%;
+}
+
+.Principle {
+  width: 20%;
+}
+
+/* Estilo das células de dados */
+td {
+  font-size: 0.8em;
+  padding-left: 0.8em;
+  padding-bottom: 1em;
+  color: black;
+}
+
+/* Estilo das linhas alternadas */
+tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* Cor da linha ímpar */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2; /* Cor da linha par */
 }
