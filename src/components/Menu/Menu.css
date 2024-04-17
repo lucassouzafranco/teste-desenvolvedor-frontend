@@ -24,6 +24,14 @@
 .MenuIcon {
   font-size: 1.3rem;
   margin: 0.2em;
+  color: #09242F;
+}
+
+.WhiteIcon {
+  font-size: 1.5rem;
+  margin: 0.7em;
+  color: white;
+
 }
 
 .TitleAndLogo {
@@ -40,4 +48,39 @@
   border-style: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.Sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5vw;
+  height: 100vh;
+  background-color: #09242F;
+  z-index: 999; 
+}
+
+.SidebarOpen {
+  transform: translateX(0); /* Mostra a sidebar */
+}
+
+.CloseSidebar {
+  transform: translateX(-100%); /* Esconde a sidebar */
+  cursor: pointer;
+  background-color: #09242F;
+  border: 1px solid red;
+}
+
+.TableButton {
+  width: 5vw;
+  color: white;
+  cursor: pointer;
+  background-color: transparent;
+  border-style: none;
+}
+
+.TableIcon {
+  font-size: 1.4rem;
+  margin-top: 2em;
+  color: white;
 }
