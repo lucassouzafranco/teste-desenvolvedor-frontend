@@ -1,5 +1,6 @@
 import './ComponentWrapper.css'
 import Header from '../Header/Header'
+import Search from '../Search/Search';
 
 function ComponentWrapper() {
   return (
@@ -8,7 +9,7 @@ function ComponentWrapper() {
         <div className='ComponentWrapper'>
           <Header />
           <hr />
-          searchbar
+          <Search />
         </div>
       </div>
     </div>
