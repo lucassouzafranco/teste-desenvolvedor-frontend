@@ -1,4 +1,8 @@
 import "./Table.css";
+import { MdEdit } from "react-icons/md";
+import { IoMdTrash } from "react-icons/io";
+
+
 
 // interface TableData para descrever a estrutura dos dados da tabela
 export interface TableData {
@@ -18,6 +22,7 @@ function Table({ data }: { data: TableData[] }) {
             <th className="Date">Data</th>
             <th className="Lab">Laboratório</th>
             <th className="Principle">Princípio Ativo</th>
+            <th className="Actions">Ações</th> {/* Adiciona uma coluna para as ações */}
           </tr>
         </thead>
         <tbody>
@@ -30,10 +35,24 @@ function Table({ data }: { data: TableData[] }) {
                 {/* Renderiza o nome do princípio ativo */}
                 {item.active_principles[0].name}
               </td>
+              <td>
+                <ActionIcons /> {/* Adiciona os ícones de ação */}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+// Componente para renderizar os ícones de ação
+function ActionIcons() {
+
+  return (
+    <div className="ActionIcons">
+      <MdEdit className="EditIcon"/>
+      <IoMdTrash className="TrashIcon"/>
     </div>
   );
 }

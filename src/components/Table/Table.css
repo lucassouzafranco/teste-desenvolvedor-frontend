@@ -15,7 +15,6 @@ th {
   color: #09242F;
 }
 
-/* Largura das colunas do cabeçalho */
 .Name {
   width: 22%;
 }
@@ -32,7 +31,6 @@ th {
   width: 20%;
 }
 
-/* Estilo das células de dados */
 td {
   font-size: 0.8em;
   padding-left: 0.8em;
@@ -47,4 +45,32 @@ tbody tr:nth-child(odd) {
 
 tbody tr:nth-child(even) {
   background-color: #f2f2f2; /* Cor da linha par */
+}
+
+.ActionIcons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  font-size: 2rem;
+  width: 3.5em;
+  height: 1em;
+}
+
+.EditIcon,
+.TrashIcon {
+  color: white;
+  height: 90%;
+  width: 41%; 
+  padding: 0.2em 0;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); 
+  cursor: pointer;
+}
+
+.EditIcon {
+  background-color: #007bff;
+}
+
+.TrashIcon {
+  background-color: #FF5771;
 }

@@ -7,7 +7,7 @@ import Search from '../Search/Search';
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  // Formate a data como desejado (por exemplo, "yyyy-MM-dd HH:mm:ss")
+  // Formata a data ("dd--MM--aaaa, HH:mm:ss")
   const formattedDate = date.toLocaleString();
   return formattedDate;
 }
@@ -19,6 +19,7 @@ function ComponentWrapper() {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}${import.meta.env.VITE_API_DATA_ENDPOINT}`);
+        console.log('Dados da API:', response.data);
         // Formate a data antes de definir no estado
         const formattedData = response.data.map((item: TableData) => ({
           ...item,
@@ -33,7 +34,9 @@ function ComponentWrapper() {
 
     fetchData();
   }, []);
-  console.log(data)
+
+  console.log('Dados a serem renderizados:', data);
+
   return (
     <div className='GeneralContainer'>
       <div className='ContentWrapper'>
