@@ -29,7 +29,7 @@ function Menu() {
           {!sidebarOpen && <HiMenuAlt2 className={`MenuIcon ${sidebarOpen ? 'WhiteIcon' : ''}`}/>}
         </button>
         <div className='TitleAndLogo'>
-          PHARMA.LIB 
+          Pharma.Lib 
           <img 
             src={medical_cross_img} 
             alt='medical cross' 

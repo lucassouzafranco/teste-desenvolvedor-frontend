@@ -3,12 +3,12 @@
   justify-content: flex-start;
   align-items: center;
   background-color: #f8f9fa;
-  margin-top: 0.4em;
+  margin-top: 0.3em;
 }
 
 .HeaderTitle {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: #343a40;
-  margin-top: 1em;
+  margin-top: 0.4em;
 }
