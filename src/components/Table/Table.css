@@ -1,0 +1,26 @@
+.TableContainer {
+  margin-top: 3em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  padding: 0.5em;
+  text-align: left;
+  border-bottom: 1px solid #B6B6B6;
+}
+
+th, td {
+  color: #09242F;
+}
+
+td {
+  padding-left: 0.5em;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

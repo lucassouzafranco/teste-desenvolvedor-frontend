@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between; 
   align-items: center;
+  padding: 0;
 }
 
 .SearchBox {
@@ -10,8 +11,8 @@
 }
 
 .SearchInput {
-  width: 300px;
-  height: 30px;
+  width: 35vw;
+  height: 4.5vh;
   padding: 5px;
   border: none;
   border-radius: 5px;
@@ -28,7 +29,7 @@
 
 .DropDown {
   position: relative;
-  margin-left: 4em;
+  margin-left: 2em;
 }
 
 .DropButton {
@@ -76,4 +77,5 @@
   padding: 0.7em 0.9em;
   border-radius: 4px;
   margin-right: 2em;
+  font-weight: 700;
 }
