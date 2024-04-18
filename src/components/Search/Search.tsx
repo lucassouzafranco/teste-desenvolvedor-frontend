@@ -3,14 +3,19 @@ import './Search.css';
 
 interface Props {
   onSearch: (searchTerm: string) => void;
-  onNewMedication: () => void; 
 }
 
-const Search: React.FC<Props> = ({ onSearch, onNewMedication }) => {
+const Search: React.FC<Props> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    const value = event.target.value;
+    setSearchTerm(value);
+
+    // Aguardar 1.2 segundos antes de chamar a função de busca
+    setTimeout(() => {
+      onSearch(value);
+    }, 1200);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -39,7 +44,10 @@ const Search: React.FC<Props> = ({ onSearch, onNewMedication }) => {
         </div>
       </div>
       <div className="NewMedicationBtnContainer">
-        <button className="NewMedicationButton" onClick={onNewMedication}>
+        <button
+          className="NewMedicationButton"
+          onClick={() => onSearch(searchTerm)}
+        >
           Novo Medicamento
         </button>
       </div>

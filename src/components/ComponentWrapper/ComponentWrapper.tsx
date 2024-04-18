@@ -15,8 +15,8 @@ function formatDate(dateString: string): string {
 
 function ComponentWrapper() {
   const [data, setData] = useState<TableData[]>([]);
-  const { currentPage } = usePagination();
   const [originalData, setOriginalData] = useState<TableData[]>([]);
+  const { currentPage } = usePagination();
 
   useEffect(() => {
     fetchData(currentPage);
@@ -30,27 +30,26 @@ function ComponentWrapper() {
         ...item,
         published_at: formatDate(item.published_at),
       }));
-      setData(formattedData);
+      
+      setData(formattedData); 
       setOriginalData(formattedData); // Salva os dados originais ao receber a resposta da API
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
-
+  
   const handleSearch = (searchTerm: string) => {
-    // Verifica se o termo de busca está vazio
+    // Verificar se o termo de busca está vazio
     if (!searchTerm.trim()) {
-      // Se estiver vazio, exibe todos os dados
+      // Se estiver vazio, exibir todos os dados originais
       setData(originalData);
     } else {
-      // Caso contrário, filtra os dados com base no termo de busca
       const filteredData = originalData.filter((item) =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setData(filteredData);
     }
   };
-  
 
   return (
     <div className="GeneralContainer">
