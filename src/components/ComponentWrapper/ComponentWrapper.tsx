@@ -5,52 +5,60 @@ import Header from '../Header/Header';
 import Table, { TableData } from '../Table/Table';
 import Search from '../Search/Search';
 import Pagination from '../Pagination/Pagination';
-import { usePagination } from '../../page/PaginationContext'; // Importe o hook usePagination
+import { usePagination } from '../../page/PaginationContext';
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  // Formata a data ("dd--MM--aaaa, HH:mm:ss")
   const formattedDate = date.toLocaleString();
   return formattedDate;
 }
 
 function ComponentWrapper() {
   const [data, setData] = useState<TableData[]>([]);
-  const { currentPage } = usePagination(); // Obtenha o estado atual da página usando o hook usePagination
-  
-  useEffect(() => {
-    const fetchData = async (pageNumber: number) => { // Adicione pageNumber como parâmetro
-      try {
-        const response = await api.get(`data?_page=${pageNumber}`); // Use o pageNumber na solicitação da API
-        console.log('Dados da API:', response.data);
-    
-        // Acesse a propriedade 'data' para obter os itens
-        const responseData = response.data.data;
-    
-        // Formate a data antes de definir no estado
-        const formattedData = responseData.map((item: TableData) => ({
-          ...item,
-          published_at: formatDate(item.published_at)
-        }));
-        setData(formattedData);
-        console.log('Dados recebidos:', formattedData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    
-    fetchData(currentPage); // Chame a função fetchData com currentPage como argumento
-  }, [currentPage]); // Adicione currentPage como dependência do useEffect
+  const { currentPage } = usePagination();
+  const [originalData, setOriginalData] = useState<TableData[]>([]);
 
-  console.log('Dados a serem renderizados:', data);
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const fetchData = async (pageNumber: number) => {
+    try {
+      const response = await api.get(`data?_page=${pageNumber}`);
+      const responseData = response.data.data;
+      const formattedData = responseData.map((item: TableData) => ({
+        ...item,
+        published_at: formatDate(item.published_at),
+      }));
+      setData(formattedData);
+      setOriginalData(formattedData); // Salva os dados originais ao receber a resposta da API
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleSearch = (searchTerm: string) => {
+    // Verifica se o termo de busca está vazio
+    if (!searchTerm.trim()) {
+      // Se estiver vazio, exibe todos os dados
+      setData(originalData);
+    } else {
+      // Caso contrário, filtra os dados com base no termo de busca
+      const filteredData = originalData.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setData(filteredData);
+    }
+  };
+  
 
   return (
-    <div className='GeneralContainer'>
-      <div className='ContentWrapper'>
-        <div className='ComponentWrapper'>
+    <div className="GeneralContainer">
+      <div className="ContentWrapper">
+        <div className="ComponentWrapper">
           <Header />
           <hr />
-          <Search />
+          <Search onSearch={handleSearch} />
           <Table data={data} />
           <Pagination />
         </div>
