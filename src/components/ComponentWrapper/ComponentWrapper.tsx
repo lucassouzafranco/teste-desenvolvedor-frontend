@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { api } from '../../lib/axios';
 import './ComponentWrapper.css';
 import Header from '../Header/Header';
 import Table, { TableData } from '../Table/Table';
 import Search from '../Search/Search';
+import Pagination from '../Pagination/Pagination';
+import { usePagination } from '../../page/PaginationContext'; // Importe o hook usePagination
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -14,14 +16,19 @@ function formatDate(dateString: string): string {
 
 function ComponentWrapper() {
   const [data, setData] = useState<TableData[]>([]);
-
+  const { currentPage } = usePagination(); // Obtenha o estado atual da página usando o hook usePagination
+  
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (pageNumber: number) => { // Adicione pageNumber como parâmetro
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}${import.meta.env.VITE_API_DATA_ENDPOINT}`);
+        const response = await api.get(`data?_page=${pageNumber}`); // Use o pageNumber na solicitação da API
         console.log('Dados da API:', response.data);
+    
+        // Acesse a propriedade 'data' para obter os itens
+        const responseData = response.data.data;
+    
         // Formate a data antes de definir no estado
-        const formattedData = response.data.map((item: TableData) => ({
+        const formattedData = responseData.map((item: TableData) => ({
           ...item,
           published_at: formatDate(item.published_at)
         }));
@@ -31,9 +38,9 @@ function ComponentWrapper() {
         console.error('Error fetching data:', error);
       }
     };
-
-    fetchData();
-  }, []);
+    
+    fetchData(currentPage); // Chame a função fetchData com currentPage como argumento
+  }, [currentPage]); // Adicione currentPage como dependência do useEffect
 
   console.log('Dados a serem renderizados:', data);
 
@@ -45,6 +52,7 @@ function ComponentWrapper() {
           <hr />
           <Search />
           <Table data={data} />
+          <Pagination />
         </div>
       </div>
     </div>

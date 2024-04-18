@@ -16,14 +16,14 @@
   padding: 5px;
   border: none;
   border-radius: 5px;
-  background-color: #E4E4E4;
-  color: #B6B6B6;
+  color: white;
+  background-color: #B6B6B6;
   padding-left: 1.5em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
 }
 
 ::placeholder {
-  color: #B6B6B6;
+  color: WHITE;
   font-style: italic;
   padding: 0.5em;
 }
@@ -32,15 +32,16 @@
   position: relative;
   margin-left: 2em; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  border-radius: 5px;
 }
 
 .DropButton {
-  background-color: #E4E4E4;
-  color: #B6B6B6;
+  background-color: #B6B6B6;
+  color: WHITE;
   border: none;
   cursor: pointer;
   padding: 0.5em 0.9em;
-  border-radius: 5px;
+  border-radius: 6px;
 }
 
 .DropDownContent {

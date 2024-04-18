@@ -1,18 +1,22 @@
-import "./Table.css";
-import { MdEdit } from "react-icons/md";
-import { IoMdTrash } from "react-icons/io";
-
-
+import React from 'react';
+import { MdEdit } from 'react-icons/md';
+import { IoMdTrash } from 'react-icons/io';
+import './Table.css';
 
 // interface TableData para descrever a estrutura dos dados da tabela
 export interface TableData {
+  id: string;
   name: string;
   published_at: string;
   company: string;
-  active_principles: { name: string }[]; // Atualizado para refletir a estrutura dos princípios ativos
+  active_principles: { id: string; name: string }[];
 }
 
-function Table({ data }: { data: TableData[] }) {
+interface Props {
+  data: TableData[];
+}
+
+const Table: React.FC<Props> = ({ data }) => {
   return (
     <div className="TableContainer">
       <table>
@@ -22,21 +26,22 @@ function Table({ data }: { data: TableData[] }) {
             <th className="Date">Data</th>
             <th className="Lab">Laboratório</th>
             <th className="Principle">Princípio Ativo</th>
-            <th className="Actions">Ações</th> {/* Adiciona uma coluna para as ações */}
+            <th className="Actions">Ações</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
-            <tr key={index}>
+          {data.map((item) => (
+            <tr key={item.id}>
               <td>{item.name}</td>
               <td>{item.published_at}</td>
               <td>{item.company}</td>
               <td>
-                {/* Renderiza o nome do princípio ativo */}
-                {item.active_principles[0].name}
+                {item.active_principles.map((principle) => (
+                  <span key={principle.id}>{principle.name}<br /></span>
+                ))}
               </td>
               <td>
-                <ActionIcons /> {/* Adiciona os ícones de ação */}
+                <ActionIcons />
               </td>
             </tr>
           ))}
@@ -44,17 +49,15 @@ function Table({ data }: { data: TableData[] }) {
       </table>
     </div>
   );
-}
+};
 
-// Componente para renderizar os ícones de ação
-function ActionIcons() {
-
+const ActionIcons: React.FC = () => {
   return (
     <div className="ActionIcons">
-      <MdEdit className="EditIcon"/>
-      <IoMdTrash className="TrashIcon"/>
+      <MdEdit className="EditIcon" />
+      <IoMdTrash className="TrashIcon" />
     </div>
   );
-}
+};
 
 export default Table;
