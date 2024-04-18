@@ -6,12 +6,7 @@ import Table, { TableData } from '../Table/Table';
 import Search from '../Search/Search';
 import Pagination from '../Pagination/Pagination';
 import { usePagination } from '../../page/PaginationContext';
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const formattedDate = date.toLocaleString();
-  return formattedDate;
-}
+import { parseISO, format } from 'date-fns'; 
 
 function ComponentWrapper() {
   const [data, setData] = useState<TableData[]>([]);
@@ -26,18 +21,49 @@ function ComponentWrapper() {
     try {
       const response = await api.get(`data?_page=${pageNumber}`);
       const responseData = response.data.data;
-      const formattedData = responseData.map((item: TableData) => ({
-        ...item,
-        published_at: formatDate(item.published_at),
-      }));
+  
+      // Formatar a data de publicação e adicionar ao objeto de dados
+      const formattedData = responseData.map((item: TableData) => {
+        const formattedItem = {
+          ...item,
+          published_at: formatApiDate(item.published_at),
+        };
+        return formattedItem;
+      });
+  
+      console.log('Dados antes da ordenação:', formattedData);
+  
+      // Ordenar os dados pela data de publicação antes de definir o estado
+      const sortedData = formattedData.sort((a, b) => {
+        const dateA = new Date(a.published_at);
+        const dateB = new Date(b.published_at);
       
-      setData(formattedData); 
-      setOriginalData(formattedData); // Salva os dados originais ao receber a resposta da API
+        console.log('Date A:', dateA);
+        console.log('Date B:', dateB);
+      
+        console.log('Comparison:', dateA.getTime() - dateB.getTime());
+      
+        return dateA.getTime() - dateB.getTime();
+      });
+  
+      console.log('Dados após a ordenação:', sortedData);
+  
+      setData(sortedData);
+      setOriginalData(sortedData); // Salva os dados originais ao receber a resposta da API
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
-  
+
+  // Função para formatar a data da API
+  function formatApiDate(dateString: string): string {
+    // Primeiro, analisamos a string da data no formato ISO
+    const parsedDate = parseISO(dateString);
+    // Em seguida, formatamos a data no formato desejado
+    const formattedDate = format(parsedDate, 'dd/MM/yyyy, HH:mm:ss');
+    return formattedDate;
+  }
+   
   const handleSearch = (searchTerm: string) => {
     // Verificar se o termo de busca está vazio
     if (!searchTerm.trim()) {
@@ -51,13 +77,14 @@ function ComponentWrapper() {
     }
   };
 
+  console.log(data);
   return (
     <div className="GeneralContainer">
       <div className="ContentWrapper">
         <div className="ComponentWrapper">
           <Header />
           <hr />
-          <Search onSearch={handleSearch} />
+          <Search onSearch={handleSearch} data={data} />
           <Table data={data} />
           <Pagination />
         </div>

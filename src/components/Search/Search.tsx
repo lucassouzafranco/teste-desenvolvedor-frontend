@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import './Search.css';
+import CSVExporter from '../CSVExporter/CSVExporter';
+import { TableData } from '../Table/Table';
 
-interface Props {
-  onSearch: (searchTerm: string) => void;
+interface SearchProps {
+  onSearch: (searchTerm: string, data: TableData[]) => void;
+  data: TableData[]; // Adicionando a propriedade data
 }
 
-const Search: React.FC<Props> = ({ onSearch }) => {
+const Search: React.FC<SearchProps> = ({ onSearch, data }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,13 +17,13 @@ const Search: React.FC<Props> = ({ onSearch }) => {
 
     // Aguardar 1.2 segundos antes de chamar a função de busca
     setTimeout(() => {
-      onSearch(value);
+      onSearch(value, data); // Passando os dados para a função onSearch
     }, 1200);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      onSearch(searchTerm);
+      onSearch(searchTerm, data); // Passando os dados para a função onSearch
     }
   };
 
@@ -35,22 +38,8 @@ const Search: React.FC<Props> = ({ onSearch }) => {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         />
-        <div className="DropDown">
-          <button className="DropButton">Filtrar por</button>
-          <div className="DropDownContent">
-            <a href="#">Data de publicação</a>
-            <a href="#">Ordem alfabética</a>
-          </div>
-        </div>
       </div>
-      <div className="NewMedicationBtnContainer">
-        <button
-          className="NewMedicationButton"
-          onClick={() => onSearch(searchTerm)}
-        >
-          Novo Medicamento
-        </button>
-      </div>
+      <CSVExporter data={data}/>
     </div>
   );
 };
