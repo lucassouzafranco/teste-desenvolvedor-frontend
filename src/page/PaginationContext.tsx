@@ -1,5 +1,3 @@
-// paginationContext.tsx
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface PaginationContextType {
@@ -19,17 +17,14 @@ export const PaginationProvider: React.FC<PaginationProviderProps> = ({ children
   const [currentPage, setCurrentPage] = useState(1);
 
   const nextPage = () => {
-    console.log('Next page clicked');
     setCurrentPage(prevPage => prevPage + 1);
   };
 
   const prevPage = () => {
-    console.log('Previous page clicked');
     setCurrentPage(prevPage => prevPage - 1);
   };
 
   const goToPage = (pageNumber: number) => {
-    console.log(`Go to page ${pageNumber} clicked`);
     setCurrentPage(pageNumber);
   };
 
@@ -47,3 +42,5 @@ export const usePagination = () => {
   }
   return context;
 };
+
+export { PaginationContext }; // Exportar o contexto, se necessário
