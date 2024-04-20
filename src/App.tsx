@@ -1,16 +1,17 @@
 import "./App.css";
 import Menu from "./components/Menu/Menu";
 import ComponentWrapper from "./components/ComponentWrapper/ComponentWrapper";
-import { PaginationProvider } from "../src/page/PaginationContext";
+import { PaginationProvider } from "./context/PaginationContext";
+import { DataProvider } from "./context/DataContext";
 
 function App() {
   return (
-    <PaginationProvider>
-      <div>
-        <Menu />
-        <ComponentWrapper />
-      </div>
-    </PaginationProvider>
+    <DataProvider>
+      <PaginationProvider>
+          <Menu />
+          <ComponentWrapper />
+      </PaginationProvider>
+    </DataProvider>
   );
 }
 

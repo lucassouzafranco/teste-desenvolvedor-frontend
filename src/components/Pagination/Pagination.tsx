@@ -1,10 +1,8 @@
-import { usePagination } from '../../page/PaginationContext';
+import { usePagination } from '../../context/PaginationContext';
 import './Pagination.css'
 
 const Pagination: React.FC = () => {
   const { currentPage, goToPage } = usePagination();
-
-  console.log('Current page:', currentPage);
 
   return (
     <div className="paginationContainer">

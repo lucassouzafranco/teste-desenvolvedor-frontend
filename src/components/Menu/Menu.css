@@ -78,10 +78,28 @@
   background-color: transparent;
   border-style: none;
   opacity: 0.1;
+  border: 1px solid red;
 }
 
 .TableIcon {
   font-size: 1.4rem;
+  margin-top: 2em;
+  color: white;
+}
+
+.PDFButton {
+  width: 5vw;
+  color: white;
+  cursor: pointer;
+  background-color: transparent;
+  border-style: none;
+  font-size: 1.5rem;
+  opacity: 0.9;
+  margin-top: 2em;
+}
+
+.PdfIcon {
+  font-size: 2rem; /* Ajuste o tamanho do ícone PDF conforme necessário */
   margin-top: 2em;
   color: white;
 }
