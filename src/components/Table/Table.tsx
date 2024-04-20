@@ -1,22 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { MdEdit } from 'react-icons/md';
 import { IoMdTrash } from 'react-icons/io';
 import './Table.css';
+import { DataContext } from '../../context/DataContext';
+import { Data, ActivePrinciple } from '../../context/DataContext';
 
-// interface TableData para descrever a estrutura dos dados da tabela
-export interface TableData {
-  id: string;
-  name: string;
-  published_at: string;
-  company: string;
-  active_principles: { id: string; name: string }[];
-}
 
-interface Props {
-  data: TableData[];
-}
+const Table: React.FC = () => {
+  const { pageData } = useContext(DataContext);
+  const dataArray = pageData.data || []; // Acessar a propriedade 'data' ou inicializar um array vazio
 
-const Table: React.FC<Props> = ({ data }) => {
+  console.log('Type of pageData:', typeof pageData);
+  console.log('Content of pageData:', pageData);
+
   return (
     <div className="TableContainer">
       <table>
@@ -30,13 +26,14 @@ const Table: React.FC<Props> = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+          {dataArray.map((item:Data) => (
             <tr key={item.id}>
               <td>{item.name}</td>
               <td>{item.published_at}</td>
               <td>{item.company}</td>
               <td>
-                {item.active_principles.map((principle) => (
+              {item.active_principles.map((principle: ActivePrinciple) => (
+
                   <span key={principle.id}>{principle.name}<br /></span>
                 ))}
               </td>
