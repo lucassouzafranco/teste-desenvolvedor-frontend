@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { api } from "../lib/axios";
+import { api } from "../services/api";
 import { Data } from "../types/TableData";
 
 export interface ActivePrinciple {

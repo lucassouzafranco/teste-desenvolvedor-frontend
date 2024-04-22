@@ -24,10 +24,13 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [itemDataToEdit, setItemDataToEdit] = useState<TableData | null>(null);
 
   const openEditModal = (itemId: string) => {
     setSelectedItemId(itemId);
     setIsEditModalOpen(true);
+    const currentItemData = filteredData.find((item) => item.id === itemId);
+    setItemDataToEdit(currentItemData);
   };
 
   const openDeleteModal = (itemId: string) => {
@@ -92,10 +95,25 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
       });
       setFilteredData(sortedData);
     }
+    console.log("Filtered data:", filteredData);
   };
 
   const handleGoToPage = (pageNumber: number) => {
     goToPage(pageNumber);
+  };
+
+  const handleSubmitEdit = async (editedData: TableData) => {
+    try {
+      // Chame a função editItem para enviar os dados editados para o backend
+      await editItem(selectedItemId!, editedData);
+      console.log("Edit submitted");
+    } catch (error) {
+      console.error("Error submitting edit:", error);
+    }
+  };
+
+  const findItemById = (itemId: string) => {
+    return filteredData.find((item) => item.id === itemId);
   };
 
   return (
@@ -134,10 +152,11 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
           <EditModal
             isOpen={isEditModalOpen}
             onClose={closeModals}
-            onSubmit={() => console.log("Edit submitted")}
-            UpdateWalletData={() => console.log("Update wallet data")}
-            ItemName="produto"
+            onSubmit={handleSubmitEdit}
+            initialData={itemDataToEdit}
+            ItemName={itemDataToEdit?.name || ""}
           />
+
           <CreateModal
             isOpen={isCreateModalOpen}
             onClose={closeModals}

@@ -1,16 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { MdEdit } from 'react-icons/md';
-import { IoMdTrash } from 'react-icons/io';
-import './Table.css';
-import { DataContext } from '../../context/DataContext';
-import { Data } from '../../types/TableData';
+import React, { useContext, useEffect, useState } from "react";
+import { MdEdit } from "react-icons/md";
+import { IoMdTrash } from "react-icons/io";
+import "./Table.css";
+import { DataContext } from "../../context/DataContext";
+import { Data } from "../../types/TableData";
 
 interface TableProps {
-  data?: Data[]; // Torna a propriedade data opcional
-  currentPage?: number; // Adiciona currentPage como uma propriedade opcional
-  fetchPageData?: (pageNumber: number) => Promise<void>; // Adiciona fetchPageData como uma propriedade opcional
-  openEditModal: (id: string) => void; // Adiciona a função openEditModal como uma propriedade obrigatória
-  openDeleteModal: (id: string) => void; // Adiciona a função openDeleteModal como uma propriedade obrigatória
+  data?: Data[]; 
+  openEditModal: (id: string) => void; 
+  openDeleteModal: (id: string) => void; 
 }
 
 const Table: React.FC<TableProps> = ({ data, openEditModal, openDeleteModal }) => {
@@ -27,11 +25,13 @@ const Table: React.FC<TableProps> = ({ data, openEditModal, openDeleteModal }) =
 
   const handleEditClick = (id: string) => {
     console.log('Edit button clicked for id:', id);
+    const rowData = tableData.find(item => item.id === id);
+    console.log('Row data:', rowData);
     openEditModal(id);
   };
+  
 
   const handleDeleteClick = (id: string) => {
-    console.log('Delete button clicked for id:', id);
     openDeleteModal(id);
   };
 
