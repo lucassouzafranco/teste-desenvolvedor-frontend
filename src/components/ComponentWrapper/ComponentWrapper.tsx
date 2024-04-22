@@ -8,6 +8,9 @@ import { DataContext } from "../../context/DataContext";
 import { TableData } from "../../types/TableData";
 import { usePagination } from "../../context/PaginationContext";
 import Menu from "../Menu/Menu";
+import EditModal from "../Modal/EditModal";
+import CreateModal from "../Modal/CreateModal";
+import DeleteModal from "../Modal/DeleteModal";
 
 interface ComponentWrapperProps {}
 
@@ -17,11 +20,36 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState<TableData[]>([]);
   const [selectedOption, setSelectedOption] = useState("DD/MM/YYYY");
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const openEditModal = (itemId: string) => {
+    setSelectedItemId(itemId);
+    setIsEditModalOpen(true);
+  };
+
+  const openDeleteModal = (itemId: string) => {
+    setSelectedItemId(itemId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const openCreateModal = () => {
+    setIsCreateModalOpen(true);
+  };
+
+  const closeModals = () => {
+    setIsEditModalOpen(false);
+    setIsDeleteModalOpen(false);
+    setIsCreateModalOpen(false);
+    setSelectedItemId(null);
+  };
 
   useEffect(() => {
     console.log("Search term:", searchTerm);
     console.log("Page data:", pageData);
-  
+
     if (!searchTerm) {
       console.log("Fetching page data...");
       fetchPageData(currentPage);
@@ -47,7 +75,7 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.company.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    
+
     // Ordena os dados com base na opção selecionada
     if (selectedOption === "DD/MM/YYYY") {
       const sortedData = [...filtered].sort((a, b) => {
@@ -77,16 +105,46 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
         <div className="ComponentWrapper">
           <Header />
           <hr />
-          <Search onSearch={handleSearch} data={pageData} onSort={handleSortChange}/>
+          <Search
+            onSearch={handleSearch}
+            data={pageData}
+            onSort={handleSortChange}
+          />
           <Table
             data={filteredData}
             currentPage={currentPage}
             fetchPageData={fetchPageData}
+            openEditModal={openEditModal}
+            openDeleteModal={openDeleteModal}
+            openCreateModal={openCreateModal}
           />
+
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             goToPage={handleGoToPage}
+          />
+          <DeleteModal
+            isOpen={isDeleteModalOpen}
+            onClose={closeModals}
+            onSubmit={() => console.log("Delete submitted")}
+            ItemName="Item to be deleted"
+          />
+
+          <EditModal
+            isOpen={isEditModalOpen}
+            onClose={closeModals}
+            onSubmit={() => console.log("Edit submitted")}
+            UpdateWalletData={() => console.log("Update wallet data")}
+            ItemName="produto"
+          />
+          <CreateModal
+            isOpen={isCreateModalOpen}
+            onClose={closeModals}
+            onSubmit={() => console.log("Create submitted")}
+            ErrorMessage="Error message here"
+            UpdateWalletData={() => console.log("Update wallet data")}
+            ItemName="New item"
           />
         </div>
       </div>

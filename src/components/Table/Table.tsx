@@ -1,4 +1,3 @@
-// Table.tsx
 import React, { useContext, useEffect, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
 import { IoMdTrash } from 'react-icons/io';
@@ -10,9 +9,11 @@ interface TableProps {
   data?: Data[]; // Torna a propriedade data opcional
   currentPage?: number; // Adiciona currentPage como uma propriedade opcional
   fetchPageData?: (pageNumber: number) => Promise<void>; // Adiciona fetchPageData como uma propriedade opcional
+  openEditModal: (id: string) => void; // Adiciona a função openEditModal como uma propriedade obrigatória
+  openDeleteModal: (id: string) => void; // Adiciona a função openDeleteModal como uma propriedade obrigatória
 }
 
-const Table: React.FC<TableProps> = ({ data }) => {
+const Table: React.FC<TableProps> = ({ data, openEditModal, openDeleteModal }) => {
   const { pageData } = useContext(DataContext);
   const [tableData, setTableData] = useState<Data[]>([]);
 
@@ -23,6 +24,16 @@ const Table: React.FC<TableProps> = ({ data }) => {
       setTableData(data);
     }
   }, [data, pageData]);
+
+  const handleEditClick = (id: string) => {
+    console.log('Edit button clicked for id:', id);
+    openEditModal(id);
+  };
+
+  const handleDeleteClick = (id: string) => {
+    console.log('Delete button clicked for id:', id);
+    openDeleteModal(id);
+  };
 
   return (
     <div className="TableContainer">
@@ -50,21 +61,15 @@ const Table: React.FC<TableProps> = ({ data }) => {
                 )}
               </td>
               <td>
-                <ActionIcons />
+                <div className="ActionIcons">
+                  <MdEdit className="EditIcon" onClick={() => handleEditClick(item.id)} />
+                  <IoMdTrash className="TrashIcon" onClick={() => handleDeleteClick(item.id)} />
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
-  );
-};
-
-const ActionIcons: React.FC = () => {
-  return (
-    <div className="ActionIcons">
-      <MdEdit className="EditIcon" />
-      <IoMdTrash className="TrashIcon" />
     </div>
   );
 };
