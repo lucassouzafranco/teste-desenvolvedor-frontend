@@ -1,17 +1,28 @@
-import React, { useContext } from 'react';
+// Table.tsx
+import React, { useContext, useEffect, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
 import { IoMdTrash } from 'react-icons/io';
 import './Table.css';
 import { DataContext } from '../../context/DataContext';
-import { Data, ActivePrinciple } from '../../context/DataContext';
+import { Data } from '../../types/TableData';
 
+interface TableProps {
+  data?: Data[]; // Torna a propriedade data opcional
+  currentPage?: number; // Adiciona currentPage como uma propriedade opcional
+  fetchPageData?: (pageNumber: number) => Promise<void>; // Adiciona fetchPageData como uma propriedade opcional
+}
 
-const Table: React.FC = () => {
+const Table: React.FC<TableProps> = ({ data }) => {
   const { pageData } = useContext(DataContext);
-  const dataArray = pageData.data || []; // Acessar a propriedade 'data' ou inicializar um array vazio
+  const [tableData, setTableData] = useState<Data[]>([]);
 
-  console.log('Type of pageData:', typeof pageData);
-  console.log('Content of pageData:', pageData);
+  useEffect(() => {
+    if (!data || data.length === 0) {
+      setTableData(pageData);
+    } else {
+      setTableData(data);
+    }
+  }, [data, pageData]);
 
   return (
     <div className="TableContainer">
@@ -26,16 +37,17 @@ const Table: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {dataArray.map((item:Data) => (
+          {tableData.map((item: Data) => (
             <tr key={item.id}>
               <td>{item.name}</td>
               <td>{item.published_at}</td>
               <td>{item.company}</td>
               <td>
-              {item.active_principles.map((principle: ActivePrinciple) => (
-
-                  <span key={principle.id}>{principle.name}<br /></span>
-                ))}
+                {item.active_principle_name ? (
+                  <span>{item.active_principle_name}</span>
+                ) : (
+                  <span>N/A</span>
+                )}
               </td>
               <td>
                 <ActionIcons />

@@ -1,11 +1,11 @@
 .GeneralContainer {
   display: flex;
+  flex-direction: column; 
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  border-radius: 12px;
-  background-color: #F5F6FA;
+  background-color: #f5f6fa;
 }
 
 .ContentWrapper {
@@ -13,21 +13,21 @@
   justify-content: flex-start;
   align-items: flex-start;
   width: 88%;
-  height: 95%;
-  border: 1px solid rgba(128, 128, 128, 0.3);
+  height: 100%;
   border-radius: 12px;
-  margin-top: 1em;
 }
 
 .ComponentWrapper {
-  width: 100%;
+  width: 99%;
   height: 100%;
-  padding-left: 5em; 
+  padding-left: 5em;
+  border-radius: 12px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
 }
 
 hr {
   width: 100%;
-  margin: 1em 0; 
+  margin: 1em 0;
   border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.2); 
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
 }

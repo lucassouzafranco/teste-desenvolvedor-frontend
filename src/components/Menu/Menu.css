@@ -2,9 +2,10 @@
   display: flex;
   justify-content: center; 
   align-items: center; 
-  width: 98.9vw;
-  height: 5.3vh;
+  width: 100vw;
+  height: 5.5vh;
   border: 1px solid rgba(128, 128, 128, 0.3);
+  margin-bottom: 1.2em;
 }
 
 .MenuContent {
@@ -59,6 +60,9 @@
   height: 100vh;
   background-color: #09242F;
   z-index: 999; 
+  display:table-row;
+  justify-content: center;
+  align-items: center;
 }
 
 .SidebarOpen {
@@ -71,35 +75,56 @@
   background-color: #09242F;
 }
 
-.TableButton {
+.CSVButton {
   width: 5vw;
-  color: white;
   cursor: pointer;
   background-color: transparent;
   border-style: none;
-  opacity: 0.1;
-  border: 1px solid red;
+  display: flex;
+  justify-content: center;
 }
 
-.TableIcon {
-  font-size: 1.4rem;
-  margin-top: 2em;
-  color: white;
-}
-
-.PDFButton {
-  width: 5vw;
-  color: white;
-  cursor: pointer;
-  background-color: transparent;
-  border-style: none;
-  font-size: 1.5rem;
+.CSVIcon {
   opacity: 0.9;
-  margin-top: 2em;
+  font-size: 1.7rem;
+  margin-top: 1.5em;
+  color: white;
+  background-color: transparent;
+  border-style: none;
 }
 
-.PdfIcon {
-  font-size: 2rem; /* Ajuste o tamanho do ícone PDF conforme necessário */
-  margin-top: 2em;
+.PlusButton {
+  width: 4.5vw;
+  height: 1vh;
+  background-color: transparent;
+  border-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
+.PlusIcon {
+  font-size: 1.6rem; 
+  margin-top: 3em;
   color: white;
+  background-color: transparent;
+  border-style: none;
+  margin-left: 0.2em;
+}
+
+.DashboardButton {
+  width: 5vw;
+  cursor: pointer;
+  background-color: transparent;
+  border-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.DashboardIcon {
+  font-size: 1.5rem;
+  margin-top: 7em;
+  color: white;
+  background-color: transparent;
+  border-style: none;
 }

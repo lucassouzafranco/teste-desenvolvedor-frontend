@@ -28,6 +28,19 @@
   padding: 0.5em;
 }
 
+.Dropdown {
+  width: 9vw;
+  height: 4.5vh;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #B6B6B6;
+  margin-left: 2em; 
+  padding-left: 0.7em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
 .ExportCSVButton {
   background-color: #00CA80;
   color: #FFFFFF;

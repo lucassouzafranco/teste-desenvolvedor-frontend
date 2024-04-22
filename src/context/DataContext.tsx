@@ -1,21 +1,6 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { api } from '../lib/axios';
-
-export interface Data {
-  id: string;
-  name: string;
-  published_at: string;
-  company: string;
-  documents: Document[];
-  active_principles: ActivePrinciple[];
-}
-
-interface Document {
-  id: string;
-  expedient: string;
-  type: string;
-  url: string;
-}
+import React, { createContext, useState, useEffect, ReactNode } from "react";
+import { api } from "../lib/axios";
+import { Data } from "../types/TableData";
 
 export interface ActivePrinciple {
   id: string;
@@ -23,47 +8,87 @@ export interface ActivePrinciple {
 }
 
 export interface DataContextType {
+  allData: Data[];
   pageData: Data[];
   fetchData: () => Promise<void>;
   fetchPageData: (pageNumber: number) => Promise<void>;
 }
 
 export const DataContext = createContext<DataContextType>({
+  allData: [],
   pageData: [],
   fetchData: async () => {},
-  fetchPageData: async () => {},
+  fetchPageData: async (pageNumber = 1) => {}, // Definindo o valor padrão para pageNumber como 1
 });
 
-export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const DataProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [allData, setAllData] = useState<Data[]>([]);
   const [pageData, setPageData] = useState<Data[]>([]);
 
   useEffect(() => {
-    fetchData(); 
+    fetchData();
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (): Promise<void> => {
     try {
-      const response = await api.get<Data[]>('data');
-      setPageData(response.data); 
+      const response = await api.get<Data[]>("data");
+
+      // Mapeando os dados da resposta para extrair apenas as informações relevantes
+      const extractedData = response.data.map((item) => ({
+        id: item.id,
+        name: item.name,
+        published_at: formatDate(item.published_at),
+        company: item.company,
+        active_principle_name: item.active_principles?.[0]?.name || "", // Se houver ativo, pegue o nome; caso contrário, use uma string vazia
+      }));
+
+      // Armazenando os dados
+      setAllData(extractedData);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
-  const fetchPageData = async (pageNumber: number) => {
+  const fetchPageData = async (pageNumber: number): Promise<void> => {
     try {
       const response = await api.get<Data[]>(`data?_page=${pageNumber}`);
-      setPageData(prevData => {
-        // Verificando se os novos dados são diferentes dos dados existentes
-        return JSON.stringify(prevData) === JSON.stringify(response.data) ? prevData : response.data;
-      });
+
+      // Verificar se response.data é um objeto com a propriedade 'data'
+      const responseData = response.data;
+      if (responseData && responseData.data && Array.isArray(responseData.data)) {
+        // Acessar a propriedade 'data' para obter o array de objetos
+        const dataArray = responseData.data;
+
+        // Agora você pode iterar sobre 'dataArray' para extrair as informações necessárias
+        const extractedPageData = dataArray.map((item) => ({
+          id: item.id,
+          name: item.name,
+          published_at: formatDate(item.published_at),
+          company: item.company,
+          active_principle_name: item.active_principles?.[0]?.name || "",
+        }));
+
+        // Armazenando os dados da página atual
+        setPageData(extractedPageData);
+      } else {
+        console.error("Invalid response data:", responseData);
+      }
     } catch (error) {
-      console.error('Error fetching page data:', error);
+      console.error("Error fetching page data:", error);
     }
+  };
+
+  const formatDate = (dateString: string): string => {
+    // Remova a parte '.000Z' do final da string de data
+    return dateString.replace(".000Z", "");
   };
 
   return (
-    <DataContext.Provider value={{ pageData, fetchData, fetchPageData }}>
+    <DataContext.Provider
+      value={{ allData, pageData, fetchData, fetchPageData }}
+    >
       {children}
     </DataContext.Provider>
   );

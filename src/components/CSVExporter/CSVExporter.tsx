@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableData } from '../Table/Table';
+import { TableData } from '../../types/TableData';
 import './CSVExporter.css'; 
 
 interface CSVExporterProps {
@@ -7,9 +7,9 @@ interface CSVExporterProps {
 }
 
 const CSVExporter: React.FC<CSVExporterProps> = ({ data }) => {
-  const exportToCSV = () => {
+  const exportToCSV = (dataToExport: TableData[]) => {
     // Converte os dados da tabela em formato CSV
-    const csvContent = "data:text/csv;charset=utf-8," + data.map(row => Object.values(row).join(",")).join("\n");
+    const csvContent = "data:text/csv;charset=utf-8," + dataToExport.map(row => Object.values(row).join(",")).join("\n");
     // Codifica o conteúdo em URI
     const encodedUri = encodeURI(csvContent);
     // Cria um link para download
@@ -21,9 +21,8 @@ const CSVExporter: React.FC<CSVExporterProps> = ({ data }) => {
     link.click();
   };
 
-  // Retorna o botão de exportação CSV
   return (
-    <button onClick={exportToCSV} className='ExportCSVButton'>Exportar CSV</button>
+    <button onClick={() => exportToCSV(data)} className='ExportCSVButton'>Exportar CSV</button>
   );
 };
 

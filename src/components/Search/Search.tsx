@@ -1,30 +1,18 @@
-import React, { useState } from 'react';
-import './Search.css';
-import CSVExporter from '../CSVExporter/CSVExporter';
-import { TableData } from '../Table/Table';
+import React from "react";
+import "./Search.css";
+import CSVExporter from "../CSVExporter/CSVExporter";
+import { TableData } from "../../types/TableData";
 
 interface SearchProps {
-  onSearch: (searchTerm: string, data: TableData[]) => void;
-  data: TableData[]; // Adicionando a propriedade data
+  onSearch: (searchTerm: string) => void;
+  data: TableData[]; // Adicione a propriedade data
+  onSort: (option: string) => void; // Adicione a propriedade onSort
 }
 
-const Search: React.FC<SearchProps> = ({ onSearch, data }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSearchTerm(value);
-
-    // Aguardar 1.2 segundos antes de chamar a função de busca
-    setTimeout(() => {
-      onSearch(value, data); // Passando os dados para a função onSearch
-    }, 1200);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      onSearch(searchTerm, data); // Passando os dados para a função onSearch
-    }
+const Search: React.FC<SearchProps> = ({ onSearch, data, onSort }) => {
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = event.target.value;
+    onSort(selectedOption); // Chama a função onSort com a opção selecionada
   };
 
   return (
@@ -34,12 +22,14 @@ const Search: React.FC<SearchProps> = ({ onSearch, data }) => {
           type="text"
           placeholder="Nome do produto ou laboratório"
           className="SearchInput"
-          value={searchTerm}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
+          onChange={(event) => onSearch(event.target.value)}
         />
+        <select className="Dropdown" onChange={handleSortChange}>
+          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+          <option value="ABC">ABC</option>
+        </select>
       </div>
-      <CSVExporter data={data}/>
+      <CSVExporter data={data} />
     </div>
   );
 };
