@@ -11,6 +11,7 @@ import Menu from "../Menu/Menu";
 import EditModal from "../Modal/EditModal";
 import CreateModal from "../Modal/CreateModal";
 import DeleteModal from "../Modal/DeleteModal";
+import { editItem } from "../../services/itemService";
 
 interface ComponentWrapperProps {}
 
@@ -25,6 +26,57 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [itemDataToEdit, setItemDataToEdit] = useState<TableData | null>(null);
+
+  // Função para testar a edição do primeiro item em filteredData
+  async function testEditFirstItem() {
+    // Verifica se há algum item em filteredData
+    if (filteredData.length === 0) {
+      console.error("Nenhum item encontrado em filteredData.");
+      return;
+    }
+
+    // Pega o ID do primeiro item em filteredData
+    const firstItemId = filteredData[0].id;
+
+    // Simula os dados editados (você pode ajustar conforme necessário)
+    const editedData = {
+      id: firstItemId,
+      name: "Novo nome",
+      // Outros campos editados conforme necessário
+    };
+
+    try {
+      // Simula a requisição PUT para editar o item
+      const response = await fetch(`http://localhost:3000/${firstItemId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          // Se necessário, inclua headers de autorização ou outros headers requeridos pelo seu servidor
+        },
+        body: JSON.stringify(editedData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao editar o item.");
+      }
+
+      console.log("Edição do primeiro item enviada com sucesso!");
+    } catch (error) {
+      console.error("Erro ao enviar edição:", error);
+    }
+  }
+
+  const handleSubmitEdit = async (editedData: TableData) => {
+    try {
+      await editItem(selectedItemId!, editedData);
+      console.log("Edit submitted");
+
+      // Recarrega os dados da página após a edição
+      fetchPageData(currentPage);
+    } catch (error) {
+      console.error("Error submitting edit:", error);
+    }
+  };
 
   const openEditModal = (itemId: string) => {
     setSelectedItemId(itemId);
@@ -102,16 +154,6 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
     goToPage(pageNumber);
   };
 
-  const handleSubmitEdit = async (editedData: TableData) => {
-    try {
-      // Chame a função editItem para enviar os dados editados para o backend
-      await editItem(selectedItemId!, editedData);
-      console.log("Edit submitted");
-    } catch (error) {
-      console.error("Error submitting edit:", error);
-    }
-  };
-
   const findItemById = (itemId: string) => {
     return filteredData.find((item) => item.id === itemId);
   };
@@ -152,7 +194,7 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
           <EditModal
             isOpen={isEditModalOpen}
             onClose={closeModals}
-            onSubmit={handleSubmitEdit}
+            onSubmitEdit={handleSubmitEdit}
             initialData={itemDataToEdit}
             ItemName={itemDataToEdit?.name || ""}
           />
@@ -162,7 +204,6 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
             onClose={closeModals}
             onSubmit={() => console.log("Create submitted")}
             ErrorMessage="Error message here"
-            UpdateWalletData={() => console.log("Update wallet data")}
             ItemName="New item"
           />
         </div>

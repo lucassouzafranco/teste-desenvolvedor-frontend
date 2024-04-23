@@ -6,12 +6,16 @@ import { DataContext } from "../../context/DataContext";
 import { Data } from "../../types/TableData";
 
 interface TableProps {
-  data?: Data[]; 
-  openEditModal: (id: string) => void; 
-  openDeleteModal: (id: string) => void; 
+  data?: Data[];
+  openEditModal: (id: string) => void;
+  openDeleteModal: (id: string) => void;
 }
 
-const Table: React.FC<TableProps> = ({ data, openEditModal, openDeleteModal }) => {
+const Table: React.FC<TableProps> = ({
+  data,
+  openEditModal,
+  openDeleteModal,
+}) => {
   const { pageData } = useContext(DataContext);
   const [tableData, setTableData] = useState<Data[]>([]);
 
@@ -24,12 +28,11 @@ const Table: React.FC<TableProps> = ({ data, openEditModal, openDeleteModal }) =
   }, [data, pageData]);
 
   const handleEditClick = (id: string) => {
-    console.log('Edit button clicked for id:', id);
-    const rowData = tableData.find(item => item.id === id);
-    console.log('Row data:', rowData);
+    console.log("Edit button clicked for id:", id);
+    const rowData = tableData.find((item) => item.id === id);
+    console.log("Row data:", rowData);
     openEditModal(id);
   };
-  
 
   const handleDeleteClick = (id: string) => {
     openDeleteModal(id);
@@ -53,17 +56,17 @@ const Table: React.FC<TableProps> = ({ data, openEditModal, openDeleteModal }) =
               <td>{item.name}</td>
               <td>{item.published_at}</td>
               <td>{item.company}</td>
-              <td>
-                {item.active_principle_name ? (
-                  <span>{item.active_principle_name}</span>
-                ) : (
-                  <span>N/A</span>
-                )}
-              </td>
+              <td>{item.active_principle_name || 'N/A'}</td>
               <td>
                 <div className="ActionIcons">
-                  <MdEdit className="EditIcon" onClick={() => handleEditClick(item.id)} />
-                  <IoMdTrash className="TrashIcon" onClick={() => handleDeleteClick(item.id)} />
+                  <MdEdit
+                    className="EditIcon"
+                    onClick={() => handleEditClick(item.id)}
+                  />
+                  <IoMdTrash
+                    className="TrashIcon"
+                    onClick={() => handleDeleteClick(item.id)}
+                  />
                 </div>
               </td>
             </tr>

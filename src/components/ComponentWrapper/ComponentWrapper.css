@@ -19,10 +19,10 @@
 
 .ComponentWrapper {
   width: 99%;
-  height: 100%;
+  height: 95%;
   padding-left: 5em;
   border-radius: 12px;
-  border: 1px solid rgba(128, 128, 128, 0.3);
+  border: 1px solid rgba(128, 128, 128, 0.6);
 }
 
 hr {

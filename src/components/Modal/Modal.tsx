@@ -6,12 +6,11 @@ interface ModalProps {
   onClose: () => void;
   onSubmit: () => Promise<void>;
   ErrorMessage?: string;
-  UpdateWalletData: () => void;
   children: ReactNode;
   Title: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, children, ErrorMessage, UpdateWalletData, Title }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, children, ErrorMessage, Title }) => {
   const handleClose = () => {
     onClose();
   };
@@ -20,7 +19,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, children, Erro
     event.preventDefault();
     try {
       await onSubmit();
-      UpdateWalletData(); // Call the UpdateWalletData function after a successful submission
     } catch (error) {
       console.error(error);
     }

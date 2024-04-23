@@ -12,31 +12,20 @@
 
 .ModalContent {
   background-color: #fff;
-  padding: 20px;
+  padding: 2em;
   border-radius: 7px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  width: 50%;
-  height: 62%;
-  border: 1px solid red;
+  width: 45%;
+  height: 54vh;
 }
 
 .ButtonContainer {
   display: flex;
   justify-content: flex-end;
-  height: 8%;
-}
-
-.SubmitButton {
-  background-color: #0c9bf2;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-weight: 700;
+  height: 10%;
 }
 
 .CancelButton {
-  margin-right: 10px;
   background-color: white;
   color: #0c9bf2;
   border-style: none;
@@ -48,15 +37,16 @@
 .InputContainer {
   display: flex;
   flex-direction: column;
-  height: 41vh;
-  width: 35vw;
+  height: 24vh;
+  width: 33vw;
+  margin-top: 1em;
 }
 
 .Input {
   padding: 0.5em;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.5);
-  height: 11%;
+  height: 4vh;
 }
 
 label {

@@ -7,6 +7,7 @@ interface EditModalProps extends ModalProps {
   ItemName: string;
   onSubmitEdit: (data: TableData) => Promise<void>;
   initialData: TableData | null;
+  onSubmitEdit: (data: TableData) => Promise<void>;
 }
 
 const EditModal: React.FC<EditModalProps> = ({
@@ -15,7 +16,6 @@ const EditModal: React.FC<EditModalProps> = ({
   onSubmit,
   onSubmitEdit,
   ErrorMessage,
-  UpdateWalletData,
   ItemName,
   initialData,
 }) => {
@@ -34,9 +34,7 @@ const EditModal: React.FC<EditModalProps> = ({
   const handleSubmit = async () => {
     if (!editedData) return;
     try {
-      await onSubmitEdit(editedData);
-      onSubmit();
-      UpdateWalletData();
+      await onSubmitEdit(editedData); 
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +56,7 @@ const EditModal: React.FC<EditModalProps> = ({
           <input
             type="text"
             name="name"
-            value={editedData.name} // Ajuste aqui para acessar o campo de nome
+            value={editedData.name}
             onChange={handleInputChange}
             className="Input"
           />
@@ -69,18 +67,7 @@ const EditModal: React.FC<EditModalProps> = ({
           <input
             type="text"
             name="company"
-            value={editedData.company} // Ajuste aqui para acessar o campo de empresa
-            onChange={handleInputChange}
-            className="Input"
-          />
-
-          <label>
-            <h5>Princípio Ativo:</h5>
-          </label>
-          <input
-            type="text"
-            name="active_principle_name"
-            value={editedData.active_principle_name} // Ajuste aqui para acessar o campo do princípio ativo
+            value={editedData.company} 
             onChange={handleInputChange}
             className="Input"
           />
