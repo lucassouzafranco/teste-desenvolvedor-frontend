@@ -1,32 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Menu.css";
-import { HiMenuAlt2 } from "react-icons/hi";
-import { IoPerson } from "react-icons/io5";
-import medical_cross_img from "../../assets/medical_cross_img.png";
 import { TbFileTypeCsv } from "react-icons/tb";
 import CSVExporter from "../CSVExporter/CSVExporter";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { TableData } from "../../types/TableData";
+import Cross from "../../assets/medical_cross_img.png";
+import { IoPerson } from "react-icons/io5";
+import { DataContext } from "../../contexts/DataContext";
 
 interface MenuProps {
-  filteredData: () => TableData[];
+  filterAndSortData: () => void;
   openCreateModal: () => void;
 }
+
 function Menu({ openCreateModal }: MenuProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { allData } = useContext(DataContext);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
   const handleExportCSV = () => {
-    // Obter dados filtrados chamando a função filteredData
-    const dataToExport = filteredData();
+    console.log("Export CSV button clicked");
+    const dataToExport = allData;
     console.log("Dados filtrados:", dataToExport);
-    // Passa os dados filtrados diretamente para o CSVExporter
-    // e aciona a exportação CSV
-    CSVExporter(dataToExport);
+    // Renderiza o componente CSVExporter com os dados para exportação
+    return <CSVExporter data={dataToExport} />;
   };
 
   const handleCreateItem = () => {
@@ -37,14 +38,7 @@ function Menu({ openCreateModal }: MenuProps) {
     <div className="MenuContainer">
       {sidebarOpen && (
         <div className="Sidebar">
-          <button className="SideBarButton" onClick={toggleSidebar}>
-            <HiMenuAlt2 className="WhiteIcon" />
-          </button>
-          <button
-            className="CSVButton"
-            title="Exportar CSV"
-            onClick={handleExportCSV}
-          >
+          <button className="CSVButton" onClick={handleExportCSV}>
             <TbFileTypeCsv className="CSVIcon" />
           </button>
           <button className="PlusButton" onClick={handleCreateItem}>
@@ -65,7 +59,7 @@ function Menu({ openCreateModal }: MenuProps) {
         </button>
         <div className="TitleAndLogo">
           Pharma.Lib
-          <img src={medical_cross_img} alt="medical cross" className="Logo" />
+          <img src={Cross} alt="medical cross" className="Logo" />
         </div>
         <IoPerson className="MenuIcon" />
       </div>

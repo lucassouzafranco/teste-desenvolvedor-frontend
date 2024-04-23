@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
 import "./Table.css";
-import { DataContext } from "../../context/DataContext";
+import { DataContext } from "../../contexts/DataContext";
 import { Data } from "../../types/TableData";
 
 interface TableProps {

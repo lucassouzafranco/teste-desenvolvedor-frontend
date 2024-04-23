@@ -1,7 +1,7 @@
 import "./App.css";
 import ComponentWrapper from "./components/ComponentWrapper/ComponentWrapper";
-import { PaginationProvider } from "./context/PaginationContext";
-import { DataProvider } from "./context/DataContext";
+import { PaginationProvider } from "./contexts/PaginationContext";
+import { DataProvider } from "./contexts/DataContext";
 
 function App() {
   return (

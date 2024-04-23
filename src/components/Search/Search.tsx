@@ -5,14 +5,14 @@ import { TableData } from "../../types/TableData";
 
 interface SearchProps {
   onSearch: (searchTerm: string) => void;
-  data: TableData[]; // Adicione a propriedade data
-  onSort: (option: string) => void; // Adicione a propriedade onSort
+  data: TableData[];
+  onSort: (option: string) => void; 
 }
 
 const Search: React.FC<SearchProps> = ({ onSearch, data, onSort }) => {
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = event.target.value;
-    onSort(selectedOption); // Chama a função onSort com a opção selecionada
+    onSort(selectedOption);
   };
 
   return (
@@ -29,7 +29,6 @@ const Search: React.FC<SearchProps> = ({ onSearch, data, onSort }) => {
           <option value="ABC">ABC</option>
         </select>
       </div>
-      <CSVExporter data={data} />
     </div>
   );
 };

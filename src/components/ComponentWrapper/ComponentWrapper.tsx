@@ -4,9 +4,9 @@ import Header from "../Header/Header";
 import Table from "../Table/Table";
 import Search from "../Search/Search";
 import Pagination from "../Pagination/Pagination";
-import { DataContext } from "../../context/DataContext";
+import { DataContext } from "../../contexts/DataContext";
 import { TableData } from "../../types/TableData";
-import { usePagination } from "../../context/PaginationContext";
+import { usePagination } from "../../contexts/PaginationContext";
 import Menu from "../Menu/Menu";
 import EditModal from "../Modal/EditModal/EditModal";
 import CreateModal from "../Modal/CreateModal/CreateModal";
@@ -16,7 +16,7 @@ import { editItem, removeItem } from "../../services/itemService";
 interface ComponentWrapperProps {}
 
 const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
-  const { fetchPageData, pageData } = React.useContext(DataContext);
+  const { fetchPageData, pageData, filterAndSortData } = React.useContext(DataContext);
   const { currentPage, goToPage, totalPages } = usePagination();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState<TableData[]>([]);
@@ -26,6 +26,12 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [itemDataToEdit, setItemDataToEdit] = useState<TableData | null>(null);
+
+  useEffect(() => {
+    // Filtra e ordena os dados quando o termo de pesquisa, a opção selecionada ou os dados mudam
+    const filteredData = filterAndSortData(searchTerm, selectedOption, pageData);
+    setFilteredData(filteredData);
+  }, [searchTerm, selectedOption, pageData, filterAndSortData]);
 
   // Função para testar a edição do primeiro item em filteredData
   async function testEditFirstItem() {
@@ -135,33 +141,6 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
     }
   };
 
-  const filterAndSortData = () => {
-    // Filtra os dados com base no termo de pesquisa
-    const filtered = pageData.filter(
-      (item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.company.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    // Ordena os dados com base na opção selecionada
-    if (selectedOption === "DD/MM/YYYY") {
-      const sortedData = [...filtered].sort((a, b) => {
-        const dateA = new Date(a.published_at);
-        const dateB = new Date(b.published_at);
-        return dateB.getTime() - dateA.getTime();
-      });
-      setFilteredData(sortedData);
-    } else if (selectedOption === "ABC") {
-      const sortedData = [...filtered].sort((a, b) => {
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-      setFilteredData(sortedData);
-    }
-    console.log("Filtered data:", filteredData);
-  };
-
   const handleGoToPage = (pageNumber: number) => {
     goToPage(pageNumber);
   };
@@ -172,7 +151,9 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
 
   return (
     <div className="GeneralContainer">
-      <Menu openCreateModal={openCreateModal} />
+      <Menu filterAndSortData={filterAndSortData} openCreateModal={openCreateModal} />
+
+
       <div className="ContentWrapper">
         <div className="ComponentWrapper">
           <Header />

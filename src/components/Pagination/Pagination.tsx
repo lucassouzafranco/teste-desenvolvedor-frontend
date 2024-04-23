@@ -1,4 +1,4 @@
-import { usePagination } from '../../context/PaginationContext';
+import { usePagination } from '../../contexts/PaginationContext';
 import './Pagination.css'
 
 const Pagination: React.FC = () => {
