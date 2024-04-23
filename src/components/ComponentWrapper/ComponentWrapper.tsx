@@ -8,11 +8,10 @@ import { DataContext } from "../../context/DataContext";
 import { TableData } from "../../types/TableData";
 import { usePagination } from "../../context/PaginationContext";
 import Menu from "../Menu/Menu";
-import EditModal from "../Modal/EditModal";
-import CreateModal from "../Modal/CreateModal";
-import DeleteModal from "../Modal/DeleteModal";
-import { editItem } from "../../services/itemService";
-import { removeItem } from "../../services/itemService";
+import EditModal from "../Modal/EditModal/EditModal";
+import CreateModal from "../Modal/CreateModal/CreateModal";
+import DeleteModal from "../Modal/DeleteModal/DeleteModal";
+import { editItem, removeItem } from "../../services/itemService";
 
 interface ComponentWrapperProps {}
 
@@ -173,7 +172,7 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
 
   return (
     <div className="GeneralContainer">
-      <Menu filteredData={filteredData} />
+      <Menu openCreateModal={openCreateModal} />
       <div className="ContentWrapper">
         <div className="ComponentWrapper">
           <Header />
@@ -200,7 +199,7 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
           <DeleteModal
             isOpen={isDeleteModalOpen}
             onClose={closeModals}
-            onSubmit={() => handleDeleteItem(selectedItemId!)}
+            onSubmit={() => removeItem(selectedItemId!)}
             ItemName={
               selectedItemId
                 ? findItemById(selectedItemId)?.name || "Item to be deleted"

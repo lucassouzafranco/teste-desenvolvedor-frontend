@@ -1,4 +1,4 @@
-.Modal {
+.CreateModal {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,39 +10,31 @@
   align-items: center;
 }
 
-.ModalContent {
+.CreateModalContent {
   background-color: #fff;
   padding: 2em;
   border-radius: 7px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  width: 45%;
-  height: 54vh;
+  width: 42%;
+  height: 52vh;
 }
 
-.ButtonContainer {
+.ButtonContainerCreateModal {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   height: 10%;
+  margin-top: 5em;
 }
 
-.CancelButton {
-  background-color: white;
-  color: #0c9bf2;
-  border-style: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.InputContainer {
+.InputContainerCreateModal {
   display: flex;
   flex-direction: column;
   height: 24vh;
   width: 33vw;
-  margin-top: 1em;
+  border: 1px solid red;
 }
 
-.Input {
+.InputCreateModal {
   padding: 0.5em;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.5);
@@ -51,5 +43,18 @@
 
 label {
   margin-top: 1em;
-  margin-bottom: 0.5em;
+}
+
+.SubmitButtonCreateModal {
+  background-color: #0c9bf2;
+  color: white;
+  border-style: none;
+  cursor: pointer;
+  font-weight: 700;
+  width: 12vw;
+  border-radius: 5px;
+}
+
+.SubmitButtonCreateModal:hover {
+  background-color: #0a7ac9;
 }

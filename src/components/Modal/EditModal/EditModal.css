@@ -1,0 +1,77 @@
+.EditModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* Cor de fundo com transparência */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Certifica-se de que o modal esteja acima de outros elementos */
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6); /* Adiciona uma sombra ao redor do modal para escurecer tudo ao redor */
+}
+
+.EditModalContent {
+  background-color: #fff;
+  padding: 2em;
+  border-radius: 7px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  width: 45%;
+  height: 48vh;
+}
+
+.ButtonContainer {
+  display: flex;
+  justify-content: end;
+  align-items: center; 
+  margin-top: 3em;
+}
+
+.CancelButtonEditModal {
+  background-color: white;
+  color: #0c9bf2;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+  width: 8vw;
+  height: 4.1vh;
+  border: 1px solid #0c9bf2;
+  margin-right: 2em;
+}
+
+.SubmitButtonEditModal {
+  background-color: #0c9bf2;
+  color: white;
+  border-style: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  width: 8vw;
+  height: 4.1vh;
+}
+
+.SubmitButtonEditModal:hover {
+  background-color: #0a7ac9;
+}
+
+.InputContainer {
+  display: flex;
+  flex-direction: column;
+  height: 24vh;
+  width: 33vw;
+  margin-top: 1em;
+}
+
+.Input {
+  padding: 0.5em;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  height: 4vh;
+}
+
+label {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}

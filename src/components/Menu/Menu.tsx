@@ -10,10 +10,10 @@ import { RxDashboard } from "react-icons/rx";
 import { TableData } from "../../types/TableData";
 
 interface MenuProps {
-  filteredData: () => TableData[]; // Altere o tipo de retorno para corresponder aos dados
+  filteredData: () => TableData[];
+  openCreateModal: () => void;
 }
-
-function Menu({ filteredData }: MenuProps) {
+function Menu({ openCreateModal }: MenuProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -27,6 +27,10 @@ function Menu({ filteredData }: MenuProps) {
     // Passa os dados filtrados diretamente para o CSVExporter
     // e aciona a exportação CSV
     CSVExporter(dataToExport);
+  };
+
+  const handleCreateItem = () => {
+    openCreateModal();
   };
 
   return (
@@ -43,7 +47,7 @@ function Menu({ filteredData }: MenuProps) {
           >
             <TbFileTypeCsv className="CSVIcon" />
           </button>
-          <button className="PlusButton">
+          <button className="PlusButton" onClick={handleCreateItem}>
             <FaRegPlusSquare className="PlusIcon" />
           </button>
           <button className="DashboardButton">
@@ -61,11 +65,7 @@ function Menu({ filteredData }: MenuProps) {
         </button>
         <div className="TitleAndLogo">
           Pharma.Lib
-          <img
-            src={medical_cross_img}
-            alt="medical cross"
-            className="Logo"
-          />
+          <img src={medical_cross_img} alt="medical cross" className="Logo" />
         </div>
         <IoPerson className="MenuIcon" />
       </div>
