@@ -46,7 +46,7 @@ const EditModal: React.FC<EditModalProps> = ({
       onClose={onClose}
       onSubmit={handleSubmit}
       ErrorMessage={ErrorMessage}
-      Title={`Editar ${ItemName}`}
+      Title={`EDITAR ${ItemName}`}
     >
       {editedData !== null && (
         <div className="InputContainer">

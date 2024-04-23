@@ -12,6 +12,7 @@ import EditModal from "../Modal/EditModal";
 import CreateModal from "../Modal/CreateModal";
 import DeleteModal from "../Modal/DeleteModal";
 import { editItem } from "../../services/itemService";
+import { removeItem } from "../../services/itemService";
 
 interface ComponentWrapperProps {}
 
@@ -123,6 +124,18 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
     setSelectedOption(option);
   };
 
+  const handleDeleteItem = async (itemId: string) => {
+    try {
+      await removeItem(itemId);
+      console.log("Item removed successfully");
+
+      // Atualize a tabela após a remoção do item
+      fetchPageData(currentPage);
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
+  };
+
   const filterAndSortData = () => {
     // Filtra os dados com base no termo de pesquisa
     const filtered = pageData.filter(
@@ -187,8 +200,12 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
           <DeleteModal
             isOpen={isDeleteModalOpen}
             onClose={closeModals}
-            onSubmit={() => console.log("Delete submitted")}
-            ItemName="Item to be deleted"
+            onSubmit={() => handleDeleteItem(selectedItemId!)}
+            ItemName={
+              selectedItemId
+                ? findItemById(selectedItemId)?.name || "Item to be deleted"
+                : "Item to be deleted"
+            }
           />
 
           <EditModal
