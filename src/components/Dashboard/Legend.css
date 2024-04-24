@@ -11,9 +11,8 @@
 .legend-color {
   width: 10px;
   height: 10px;
-  margin-right: 5px;
 }
 
 .legend-label {
-  white-space: nowrap; /* Garante que o rótulo não seja quebrado em várias linhas */
+  white-space: nowrap; 
 }

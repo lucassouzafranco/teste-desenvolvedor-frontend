@@ -20,6 +20,7 @@
   background-color: #B6B6B6;
   padding-left: 1.5em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  margin-top: 2.5em;
 }
 
 ::placeholder {
@@ -38,7 +39,8 @@
   background-color: #B6B6B6;
   margin-left: 2em; 
   padding-left: 0.7em;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 2.5em; 
 }
 
 .ExportCSVButton {

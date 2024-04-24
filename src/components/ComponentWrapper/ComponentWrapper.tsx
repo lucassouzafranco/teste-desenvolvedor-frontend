@@ -115,18 +115,30 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
   };
 
   useEffect(() => {
-    console.log("Search term:", searchTerm);
-    console.log("Page data:", pageData);
-
-    if (!searchTerm) {
+    // Filtra e ordena os dados quando o termo de pesquisa ou a opção selecionada mudam
+    const filteredData = filterAndSortData(
+      searchTerm,
+      selectedOption,
+      allData // Use allData aqui para garantir que todos os dados sejam filtrados e ordenados corretamente
+    );
+    setFilteredData(filteredData);
+  }, [searchTerm, selectedOption, allData, filterAndSortData]);
+  
+  useEffect(() => {
+    // Verifica se precisa buscar os dados da página se a página atual for 1
+    if (currentPage === 1) {
       console.log("Fetching page data...");
       fetchPageData(currentPage);
     }
-  }, [searchTerm, currentPage, fetchPageData]);
-
+  }, [currentPage, fetchPageData]);
+  
+  // Atualiza os dados da página sempre que os dados filtrados mudam
   useEffect(() => {
-    filterAndSortData(); // Filtra e ordena os dados quando a opção selecionada ou o termo de pesquisa mudar
-  }, [searchTerm, selectedOption, pageData]); // Executa quando o termo de pesquisa, a opção selecionada ou os dados mudam
+    // Atualize os dados da página sempre que os dados filtrados mudarem
+    fetchPageData(currentPage);
+  }, [filteredData, currentPage, fetchPageData]);
+  
+  
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);

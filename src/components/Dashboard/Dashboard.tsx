@@ -77,21 +77,23 @@ const Dashboard = ({ allData }) => {
             },
           }}
         />
-        <div style={{ marginLeft: "20px" }}>
-          {chartData.labels.map((label, index) => (
-            <div key={index} style={{ marginBottom: "10px" }}>
-              <span
-                style={{
-                  display: "inline-block",
-                  width: "12px",
-                  height: "12px",
-                  backgroundColor: chartData.datasets[0].backgroundColor[index],
-                  marginRight: "5px",
-                }}
-              ></span>
-              <span>{label}</span>
-            </div>
-          ))}
+        <div style={{ marginLeft: "5em" }}>
+          {chartData.labels &&
+            chartData.labels.map((label, index) => (
+              <div key={index} style={{  }}>
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor:
+                      chartData.datasets[0].backgroundColor[index],
+                    marginRight: "5px",
+                  }}
+                ></span>
+                <span>{label}</span>
+              </div>
+            ))}
         </div>
       </div>
     </div>
