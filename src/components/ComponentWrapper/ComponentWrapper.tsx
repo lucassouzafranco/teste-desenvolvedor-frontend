@@ -12,11 +12,13 @@ import EditModal from "../Modal/EditModal/EditModal";
 import CreateModal from "../Modal/CreateModal/CreateModal";
 import DeleteModal from "../Modal/DeleteModal/DeleteModal";
 import { editItem, removeItem } from "../../services/itemService";
+import Dashboard from "../Dashboard/Dashboard"; 
 
 interface ComponentWrapperProps {}
 
 const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
-  const { fetchPageData, pageData, filterAndSortData } = React.useContext(DataContext);
+  const { allData, fetchPageData, pageData, filterAndSortData } =
+    React.useContext(DataContext);
   const { currentPage, goToPage, totalPages } = usePagination();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState<TableData[]>([]);
@@ -26,10 +28,15 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [itemDataToEdit, setItemDataToEdit] = useState<TableData | null>(null);
+  const [showDashboard, setShowDashboard] = useState(false); // Estado para controlar a exibição do Dashboard
 
   useEffect(() => {
     // Filtra e ordena os dados quando o termo de pesquisa, a opção selecionada ou os dados mudam
-    const filteredData = filterAndSortData(searchTerm, selectedOption, pageData);
+    const filteredData = filterAndSortData(
+      searchTerm,
+      selectedOption,
+      pageData
+    );
     setFilteredData(filteredData);
   }, [searchTerm, selectedOption, pageData, filterAndSortData]);
 
@@ -149,34 +156,42 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
     return filteredData.find((item) => item.id === itemId);
   };
 
+  const toggleDashboard = () => {
+    setShowDashboard(!showDashboard);
+  };
+
   return (
     <div className="GeneralContainer">
-      <Menu filterAndSortData={filterAndSortData} openCreateModal={openCreateModal} />
-
+      <Menu
+        filterAndSortData={filterAndSortData}
+        openCreateModal={openCreateModal}
+        toggleDashboard={toggleDashboard}
+      />
 
       <div className="ContentWrapper">
         <div className="ComponentWrapper">
           <Header />
-          <hr />
-          <Search
-            onSearch={handleSearch}
-            data={pageData}
-            onSort={handleSortChange}
-          />
-          <Table
-            data={filteredData}
-            currentPage={currentPage}
-            fetchPageData={fetchPageData}
-            openEditModal={openEditModal}
-            openDeleteModal={openDeleteModal}
-            openCreateModal={openCreateModal}
-          />
+          {showDashboard ? (
+            <Dashboard allData={allData} /> // Renderiza o Dashboard se showDashboard for true
+          ) : (
+            <>
+              <Search onSearch={handleSearch} onSort={handleSortChange} />
+              <Table
+                data={filteredData}
+                currentPage={currentPage}
+                fetchPageData={fetchPageData}
+                openEditModal={openEditModal}
+                openDeleteModal={openDeleteModal}
+                openCreateModal={openCreateModal}
+              />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                goToPage={handleGoToPage}
+              />
+            </>
+          )}
 
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            goToPage={handleGoToPage}
-          />
           <DeleteModal
             isOpen={isDeleteModalOpen}
             onClose={closeModals}

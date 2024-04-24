@@ -12,9 +12,10 @@ import { DataContext } from "../../contexts/DataContext";
 interface MenuProps {
   filterAndSortData: () => void;
   openCreateModal: () => void;
+  toggleDashboard: () => void;
 }
 
-function Menu({ openCreateModal }: MenuProps) {
+function Menu({ openCreateModal, toggleDashboard }: MenuProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { allData } = useContext(DataContext);
 
@@ -34,6 +35,11 @@ function Menu({ openCreateModal }: MenuProps) {
     openCreateModal();
   };
 
+  const handleDashboardButtonClick = () => {
+    console.log("Dashboard button clicked");
+    toggleDashboard();
+  };
+
   return (
     <div className="MenuContainer">
       {sidebarOpen && (
@@ -41,10 +47,10 @@ function Menu({ openCreateModal }: MenuProps) {
           <button className="CSVButton" onClick={handleExportCSV}>
             <TbFileTypeCsv className="CSVIcon" />
           </button>
-          <button className="PlusButton" onClick={handleCreateItem}>
+          <button className="CreateButton" onClick={handleCreateItem}>
             <FaRegPlusSquare className="PlusIcon" />
           </button>
-          <button className="DashboardButton">
+          <button className="DashboardButton" onClick={handleDashboardButtonClick}>
             <RxDashboard className="DashboardIcon" />
           </button>
         </div>
