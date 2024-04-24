@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./Legend.css";
 
 const Legend = ({ chartData }) => {
   const [legendData, setLegendData] = useState([]);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 
-
 const Dashboard = ({ allData }) => {
   const [chartData, setChartData] = useState({
     datasets: [],
@@ -54,30 +53,47 @@ const Dashboard = ({ allData }) => {
     <div
       className="dashboard-container"
       style={{
-        maxWidth: "500px", // Defina o tamanho máximo aqui
+        maxWidth: "500px",
         margin: "auto",
       }}
     >
-      <Doughnut
-        data={chartData}
-        options={{
-          plugins: {
-            legend: {
-              display: true,
-              position: "right",
-            },
-            tooltip: {
-              callbacks: {
-                label: function (tooltipItem, data) {
-                  const label = data.labels[tooltipItem.index];
-                  const value = data.datasets[0].data[tooltipItem.index];
-                  return `${label}: ${value}`;
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Doughnut
+          data={chartData}
+          options={{
+            plugins: {
+              legend: {
+                display: false, // Desativar a legenda padrão
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (tooltipItem, data) {
+                    const label = data.labels[tooltipItem.index];
+                    const value = data.datasets[0].data[tooltipItem.index];
+                    return `${label}: ${value}`;
+                  },
                 },
               },
             },
-          },
-        }}
-      />
+          }}
+        />
+        <div style={{ marginLeft: "20px" }}>
+          {chartData.labels.map((label, index) => (
+            <div key={index} style={{ marginBottom: "10px" }}>
+              <span
+                style={{
+                  display: "inline-block",
+                  width: "12px",
+                  height: "12px",
+                  backgroundColor: chartData.datasets[0].backgroundColor[index],
+                  marginRight: "5px",
+                }}
+              ></span>
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
