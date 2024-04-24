@@ -19,8 +19,11 @@ Edição de medicamentos: A edição de medicamentos permite alterar o nome do p
 Durante o desenvolvimento do projeto, foram tomadas algumas decisões importantes para garantir a qualidade, organização e eficiência do código. Abaixo estão as decisões tomadas e o motivo pelo qual foram escolhidas.
 
 - **Criação do projeto com Vite:** Optei por utilizar o Vite como meu bundler durante o desenvolvimento do projeto. Escolhi o Vite devido à sua velocidade de compilação incrivelmente rápida, o que é essencial para um fluxo de desenvolvimento ágil. Essas características tornam o Vite uma escolha ideal para projetos que priorizam a eficiência e a simplicidade no processo de desenvolvimento front-end.
+  
 - **Linguagem TypeScript:** Decidi adotar o TypeScript como linguagem principal para o desenvolvimento do projeto por sua capacidade de adicionar tipagem estática ao JavaScript, o que ajuda a detectar erros durante o desenvolvimento e a melhorar a qualidade e manutenibilidade do código. Com o TypeScript, pude definir tipos para variáveis, parâmetros de função, objetos e outros elementos do código, proporcionando um ambiente de desenvolvimento mais seguro e confiável.
+  
 - **Context API:** Optei por utilizar Context API do React para gerenciar o estado global da aplicação. Escolhi usar Context API devido à sua simplicidade de uso e sua integração nativa com o ecossistema do React. Com os Contexts e Providers nesse projeto, pude criar e compartilhar os principais estados entre componentes sem a necessidade de passar props manualmente por vários níveis da árvore de componentes.
+  
 - **Charts.js:** Decidi integrar a biblioteca Chart.js ao projeto para a visualização de dados no Dashboard. Escolhi o Chart.js devido à sua facilidade de uso, flexibilidade e variedade de tipos de gráficos disponíveis. Com o Chart.js, fui capaz de criar meu primeiro gráfico para a minha aplicação em pouquíssimo tempo.
 
 &nbsp;
