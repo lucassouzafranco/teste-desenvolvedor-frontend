@@ -1,31 +1,32 @@
-// Importe o useState e useEffect
 import React, { useState, useEffect } from "react";
+import { ChartData } from "chart.js";
 
-// Defina o componente Legend
-const Legend = ({ chartData }) => {
-  // Use o useState para armazenar os dados da legenda
-  const [legendData, setLegendData] = useState([]);
+interface LegendItem {
+  label: string;
+  color: string;
+}
 
-  // Use o useEffect para atualizar os dados da legenda sempre que chartData mudar
+interface Props {
+  chartData: ChartData;
+}
+
+const Legend: React.FC<Props> = ({ chartData }) => {
+  const [legendData, setLegendData] = useState<LegendItem[]>([]);
+
   useEffect(() => {
-    // Verifica se chartData está definido
     if (!chartData) return;
 
-    // Extrai os rótulos e cores do chartData
     const labels = chartData.labels || [];
     const backgroundColors = chartData.datasets?.[0]?.backgroundColor || [];
 
-    // Cria um array de objetos representando os dados da legenda
-    const legendItems = labels.map((label, index) => ({
+    const legendItems: LegendItem[] = labels.map((label, index) => ({
       label,
       color: backgroundColors[index] || "",
     }));
 
-    // Define os dados da legenda
     setLegendData(legendItems);
   }, [chartData]);
 
-  // Renderiza a legenda
   return (
     <div className="legend">
       {legendData.map((item, index) => (

@@ -40,45 +40,6 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
     setFilteredData(filteredData);
   }, [searchTerm, selectedOption, pageData, filterAndSortData]);
 
-  // Função para testar a edição do primeiro item em filteredData
-  async function testEditFirstItem() {
-    // Verifica se há algum item em filteredData
-    if (filteredData.length === 0) {
-      console.error("Nenhum item encontrado em filteredData.");
-      return;
-    }
-
-    // Pega o ID do primeiro item em filteredData
-    const firstItemId = filteredData[0].id;
-
-    // Simula os dados editados (você pode ajustar conforme necessário)
-    const editedData = {
-      id: firstItemId,
-      name: "Novo nome",
-      // Outros campos editados conforme necessário
-    };
-
-    try {
-      // Simula a requisição PUT para editar o item
-      const response = await fetch(`http://localhost:3000/${firstItemId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          // Se necessário, inclua headers de autorização ou outros headers requeridos pelo seu servidor
-        },
-        body: JSON.stringify(editedData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao editar o item.");
-      }
-
-      console.log("Edição do primeiro item enviada com sucesso!");
-    } catch (error) {
-      console.error("Erro ao enviar edição:", error);
-    }
-  }
-
   const handleSubmitEdit = async (editedData: TableData) => {
     try {
       await editItem(selectedItemId!, editedData);
@@ -123,14 +84,7 @@ const ComponentWrapper: React.FC<ComponentWrapperProps> = () => {
     );
     setFilteredData(filteredData);
   }, [searchTerm, selectedOption, allData, filterAndSortData]);
-  
-  useEffect(() => {
-    // Verifica se precisa buscar os dados da página se a página atual for 1
-    if (currentPage === 1) {
-      console.log("Fetching page data...");
-      fetchPageData(currentPage);
-    }
-  }, [currentPage, fetchPageData]);
+
   
   // Atualiza os dados da página sempre que os dados filtrados mudam
   useEffect(() => {

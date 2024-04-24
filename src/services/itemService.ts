@@ -1,5 +1,5 @@
 import { api } from './api';
-
+import TableData from '../types/TableData';
 
 export async function removeItem(itemId: string): Promise<void> {
   try {

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
+import { TableData } from "../../types/TableData";
 
-const Dashboard = ({ allData }) => {
+interface DashboardProps {
+  allData: TableData[]; 
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ allData }) => {
   const [chartData, setChartData] = useState({
     datasets: [],
   });
@@ -9,8 +14,8 @@ const Dashboard = ({ allData }) => {
   useEffect(() => {
     if (!allData) return;
 
-    const countItems = (data) => {
-      const itemCounts = {};
+    const countItems = (data: TableData[]) => {
+      const itemCounts: { [key: string]: number } = {}; 
       data.forEach((item) => {
         const itemName = item.name.split(" ")[0];
         if (itemCounts[itemName]) {
@@ -22,7 +27,9 @@ const Dashboard = ({ allData }) => {
       return itemCounts;
     };
 
-    const formatDataForChart = (itemCounts) => {
+    const formatDataForChart = (itemCounts: {
+      [key: string]: number;
+    }) => {
       const labels = Object.keys(itemCounts);
       const data = Object.values(itemCounts);
       return {
@@ -67,7 +74,10 @@ const Dashboard = ({ allData }) => {
               },
               tooltip: {
                 callbacks: {
-                  label: function (tooltipItem, data) {
+                  label: function (
+                    tooltipItem: any,
+                    data: any
+                  ) {
                     const label = data.labels[tooltipItem.index];
                     const value = data.datasets[0].data[tooltipItem.index];
                     return `${label}: ${value}`;
@@ -79,8 +89,8 @@ const Dashboard = ({ allData }) => {
         />
         <div style={{ marginLeft: "5em" }}>
           {chartData.labels &&
-            chartData.labels.map((label, index) => (
-              <div key={index} style={{  }}>
+            chartData.labels.map((label: string, index: number) => (
+              <div key={index} style={{}}>
                 <span
                   style={{
                     display: "inline-block",

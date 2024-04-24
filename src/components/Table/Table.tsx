@@ -9,6 +9,7 @@ interface TableProps {
   data?: Data[];
   openEditModal: (id: string) => void;
   openDeleteModal: (id: string) => void;
+  currentPage: number;
 }
 
 const Table: React.FC<TableProps> = ({
