@@ -54,7 +54,7 @@ As funcionalidades principais do projeto incluem:
 
 Para instalar e usar o projeto "teste-desenvolvedor-frontend", siga as instruções abaixo:
 
-1. Faça um fork do projeto no GitHub: Acesse o link [https://github.com/Simulator-final/telos-flix-frontend/fork](https://github.com/lucassouzafranco/teste-desenvolvedor-frontend/fork) e clique no botão "Fork" no canto superior direito da página. Isso criará uma cópia do projeto em seu próprio repositório do GitHub.
+1. Faça um fork do projeto no GitHub: Acesse o link [https://github.com/lucassouzafranco/teste-desenvolvedor-frontend/fork](https://github.com/lucassouzafranco/teste-desenvolvedor-frontend/fork) e clique no botão "Fork" no canto superior direito da página. Isso criará uma cópia do projeto em seu próprio repositório do GitHub.
 
 2. Clone o repositório: No seu terminal, navegue até o diretório onde deseja clonar o projeto e execute o seguinte comando:
 
